@@ -1,35 +1,53 @@
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8">
-        <base href="/">
-        <title>App</title>
-      <script src="//cdn.helpapp.io/card-js/latest/kustomer-card.min.js"></script>
-    </head>
-    <body style="background: #4f97d5; color: #fff; font-size: 5em; font-family: sans-serif; text-align: center;">
-        <div style="margin-top: 200px;">
-            <p>iFrame App</p>
-            <p>
-            <button id="button" onclick="onClick()">Open Customer</button>
-            </p>
-        </div>
+        <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
         <script>
-                    // Kustomer.initialize is required for widget visibility.
-            Kustomer.initialize(function() {
-            // Open widget after 5 seconds
-            setTimeout(function() {
-                Kustomer.open();
-            }, 5000);
-            // Add comment here
-            
-        });
-            function onClick() {
-             if(Kustomer){
-                Kustomer.openCustomerEvent(
-                    "59b6a3e87db8d80013929f8",
-                    "5a524a5dfa0a1600173e73c6"
-                );
-             }
+            function loadContext() {
+                // Kustomer.initialize is required for card visibility in panel.
+                Kustomer.initialize(function(contextJSON) {
+                    var customer_attributes = contextJSON.customer.attributes;
+                    if (customer_attributes.emails.length) {
+                        var email = customer_attributes.emails[0].email;
+                        var a = document.createElement('a');
+                        var linkText = document.createTextNode("Google");
+                        a.appendChild(linkText);
+                        a.title = "Search google for information about the customer";
+                        a.href = "https://www.google.com/#q=" + encodeURIComponent(email);
+                        a.target = "_blank";
+                        document.getElementById("container").appendChild(a);
+                        Kustomer.resize();
+                    } else {
+                        // customer has no email addresses - close the card
+                        Kustomer.close();
+                    }
+                });
+            }
+          // Add comment about modal
+            function initAndShowModal() {
+                const options = {
+                    id: 'myModal',
+                    title: 'Hello from Card-JS!',
+                    url: 'https://www.kustomer.com',
+                    height: 500,
+                    width: 500,
+                };
+                Kustomer.modal.init(options, (data) => {
+                    Kustomer.modal.show('myModal');
+                });
             }
         </script>
+    </head>
+    // Add
+    <body onload="loadContext()">
+        <div class="ui card mainCard">
+            <div class="content">
+                <div class="ui header cardHeader">
+                    Kustomer Modals
+                </div>
+            </div>
+            <hr class="lineBreak">
+            <div id="container" class="ui one textArea"></div>
+            <button onclick="initAndShowModal()">Click Me To Launch A Modal</button>
+        </div>
     </body>
 </html>
