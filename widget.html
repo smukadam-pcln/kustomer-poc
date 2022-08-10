@@ -20,13 +20,16 @@
                 Kustomer.open();
             }, 5000);
             // Add comment here
-            function onClick() {
-            Kustomer.openCustomerEvent(
-                "59b6a3e87db8d80013929f8",
-                "5a524a5dfa0a1600173e73c6"
-            );
-            }
+            
         });
+            function onClick() {
+             if(Kustomer){
+                Kustomer.openCustomerEvent(
+                    "59b6a3e87db8d80013929f8",
+                    "5a524a5dfa0a1600173e73c6"
+                );
+             }
+            }
         </script>
     </body>
 </html>
