@@ -35,13 +35,13 @@
                     Kustomer.modal.show('myModal');
                 });
             }
-            window.onload(function (){
+            window.onload = function (){
                 if(Kustomer){
                     initAndShowModal();
                 }else{
                     console.error('Kustomer Object undefined')
                 }
-            })
+            }
         </script>
     </head>
     // Add
