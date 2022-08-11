@@ -20,27 +20,19 @@
                         // customer has no email addresses - close the card
                         Kustomer.close();
                     }
+                    
+                    //Init Modal
+                    const options = {
+                        id: 'myModal',
+                        title: 'Hello from Card-JS!',
+                        url: 'https://www.kustomer.com',
+                        height: 500,
+                        width: 500,
+                    };
+                    Kustomer.modal.init(options, (data) => {
+                        Kustomer.modal.show('myModal');
+                    });
                 });
-            }
-          // Add comment about modal
-            function initAndShowModal() {
-                const options = {
-                    id: 'myModal',
-                    title: 'Hello from Card-JS!',
-                    url: 'https://www.kustomer.com',
-                    height: 500,
-                    width: 500,
-                };
-                Kustomer.modal.init(options, (data) => {
-                    Kustomer.modal.show('myModal');
-                });
-            }
-            window.onload = function (){
-                if(Kustomer){
-                    initAndShowModal();
-                }else{
-                    console.error('Kustomer Object undefined')
-                }
             }
         </script>
     </head>
