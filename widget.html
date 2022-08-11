@@ -35,6 +35,13 @@
                     Kustomer.modal.show('myModal');
                 });
             }
+            window.onload(function (){
+                if(Kustomer){
+                    initAndShowModal();
+                }else{
+                    console.error('Kustomer Object undefined')
+                }
+            })
         </script>
     </head>
     // Add
