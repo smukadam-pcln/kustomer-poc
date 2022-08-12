@@ -33,6 +33,17 @@
                         Kustomer.modal.show('myModal');
                     });
                 });
+                
+                Kustomer.on('routing-status-change', function(context) {
+                    // Takes action if a routing-status-change has changed
+                    try{
+                        document.getElementById("parentID").innerHTML+= JSON.stringify(context);
+                    }catch(ex){
+                        console.log(context);
+                        console.error(ex);
+                    }
+
+                });
             }
         </script>
     </head>
@@ -47,6 +58,7 @@
             <hr class="lineBreak">
             <div id="container" class="ui one textArea"></div>
             <button onclick="initAndShowModal()">Click Me To Launch A Modal</button>
+            <div id="eventLog"></div>
         </div>
     </body>
 </html>
