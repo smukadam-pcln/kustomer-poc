@@ -34,10 +34,10 @@
                     });
                 });
                 
-                Kustomer.on('routing-status-change', function(context) {
+                Kustomer.on('context', function(context) {
                     // Takes action if a routing-status-change has changed
                     try{
-                        document.getElementById("parentID").innerHTML+= JSON.stringify(context);
+                        document.getElementById("eventLog").innerHTML+= JSON.stringify(context);
                     }catch(ex){
                         console.log(context);
                         console.error(ex);
