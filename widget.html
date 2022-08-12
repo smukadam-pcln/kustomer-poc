@@ -36,7 +36,8 @@
                 
                 Kustomer.on('context', function(context) {
                     // Takes action if a routing-status-change has changed
-                    try{
+                    try{    
+                        console.log(context);
                         document.getElementById("eventLog").innerHTML+= JSON.stringify(context);
                     }catch(ex){
                         console.log(context);
