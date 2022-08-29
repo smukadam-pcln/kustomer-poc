@@ -10,7 +10,21 @@
                     
                 });
 
-                function initAndShowModal(){
+                
+                
+                Kustomer.on('context', function(context) {
+                    // Takes action if a routing-status-change has changed
+                    try{    
+                        console.log(context);
+                    }catch(ex){
+                        console.log(context);
+                        console.error(ex);
+                    }
+
+                });
+            }
+
+            function initAndShowModal(){
                         //Init Modal
                         const modalUrl = document.getElementById("modalUrl").value;
                         if(!modalUrl){
@@ -24,7 +38,8 @@
                         height: 500,
                         width: 500,
                     };
-                    Kustomer.modal.init(options, (data) => {
+                    if(Kustomer){
+                        Kustomer.modal.init(options, (data) => {
                         console.group();
                         console.log(options)
                         console.log(data)
@@ -32,18 +47,8 @@
                         Kustomer.modal.show('myModal');
                     });
                     }
-                
-                Kustomer.on('context', function(context) {
-                    // Takes action if a routing-status-change has changed
-                    try{    
-                        console.log(context);
-                    }catch(ex){
-                        console.log(context);
-                        console.error(ex);
+                    
                     }
-
-                });
-            }
         </script>
     </head>
     // Add
