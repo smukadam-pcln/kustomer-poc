@@ -2,12 +2,11 @@
     <head>
         <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
         <script>
+            var modalList = [];
             function loadContext() {
                 // Kustomer.initialize is required for card visibility in panel.
                 Kustomer.initialize(function(contextJSON) {
                     console.log(contextJSON)
-                    
-                    
                 });
 
                 
@@ -35,17 +34,23 @@
                         id: 'myModal',
                         title: 'Custom Modal',
                         url: modalUrl,
-                        height: 500,
-                        width: 500,
+                        height: 1000,
+                        width: 1000,
                     };
                     if(Kustomer){
-                        Kustomer.modal.init(options, (data) => {
+                        try{
+                            Kustomer.modal.show(options.id);
+                        }catch(ex){
+                            console.log('Modal does not exist, creating new one');
+                            Kustomer.modal.init(options, (data) => {
                         console.group();
                         console.log(options)
                         console.log(data)
                         console.groupEnd();
-                        Kustomer.modal.show('myModal');
+                        Kustomer.modal.show(options.id);
                     });
+                        }
+                        
                     }
                     
                     }
