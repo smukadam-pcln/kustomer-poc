@@ -7,38 +7,43 @@
                 Kustomer.initialize(function(contextJSON) {
                     var customer_attributes = contextJSON.customer.attributes;
                     if (customer_attributes.emails.length) {
-                        var email = customer_attributes.emails[0].email;
-                        var a = document.createElement('a');
-                        var linkText = document.createTextNode("Google");
-                        a.appendChild(linkText);
-                        a.title = "Search google for information about the customer";
-                        a.href = "https://www.google.com/#q=" + encodeURIComponent(email);
-                        a.target = "_blank";
-                        document.getElementById("container").appendChild(a);
+                        // var email = customer_attributes.emails[0].email;
                         Kustomer.resize();
                     } else {
                         // customer has no email addresses - close the card
                         Kustomer.close();
                     }
                     
-                    //Init Modal
+                    
+                });
+
+                function initAndShowModal(){
+                        //Init Modal
+                        const modalUrl = document.getElementById("modalUrl").value;
+                        if(!modalUrl){
+                            alert("Invalid URL");
+                            return;
+                        }
                     const options = {
                         id: 'myModal',
-                        title: 'Hello from Card-JS!',
-                        url: 'https://www.kustomer.com',
+                        title: 'Custom Modal',
+                        url: modalUrl,
                         height: 500,
                         width: 500,
                     };
                     Kustomer.modal.init(options, (data) => {
+                        console.group();
+                        console.log(options)
+                        console.log(data)
+                        console.groupEnd();
                         Kustomer.modal.show('myModal');
                     });
-                });
+                    }
                 
                 Kustomer.on('context', function(context) {
                     // Takes action if a routing-status-change has changed
                     try{    
                         console.log(context);
-                        document.getElementById("eventLog").innerHTML+= JSON.stringify(context);
                     }catch(ex){
                         console.log(context);
                         console.error(ex);
@@ -58,7 +63,8 @@
             </div>
             <hr class="lineBreak">
             <div id="container" class="ui one textArea"></div>
-            <button onclick="initAndShowModal()">Click Me To Launch A Modal</button>
+            <input type="text" id="modalUrl" />
+            <button onclick="initAndShowModal()">Open URL in modal</button>
             <div id="eventLog"></div>
         </div>
     </body>
