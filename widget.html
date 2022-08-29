@@ -39,14 +39,7 @@
                     };
                     if(Kustomer){
                         try{
-                            Kustomer.modal.init(options, (data) => {
-                        console.group();
-                        console.log(options)
-                        console.log(data)
-                        console.groupEnd();
-                        Kustomer.modal.show(options.id);
-                        modalMap[options.id] = true;
-                    });
+                            Kustomer.modal.destroy(options.id)
                         }catch(ex){
                             console.log('Modal does not exist, creating new one');
                             initAndShowModal();
@@ -59,15 +52,14 @@
                     
         </script>
     </head>
-    // Add
     <body onload="loadContext()">
         <div class="ui card mainCard">
             <div class="content">
                 <div class="ui header cardHeader">
-                    Kustomer Modals
+                    Kustomer Modals POC
                 </div>
             </div>
-            <hr class="lineBreak">
+            <hr class="lineBreak"><br/><br/>
             <div id="container" class="ui one textArea"></div>
             <input type="text" id="modalUrl" />
             <button onclick="initAndShowModal()">Open URL in modal</button>
