@@ -22,7 +22,7 @@
              // Kustomer.initialize is required for card visibility in panel.
              Kustomer.initialize(function(contextJSON) {
                  console.log(contextJSON)
-                 if(Kustomer?.attributes?.lastConversation?.id){
+                 if(contextJSON?.attributes?.lastConversation?.id){
                     getLastConversation(Kustomer?.attributes?.lastConversation?.id)
                  }
              });
