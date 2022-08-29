@@ -39,9 +39,6 @@
                     };
                     if(Kustomer){
                         try{
-                            Kustomer.modal.show(options.id);
-                        }catch(ex){
-                            console.log('Modal does not exist, creating new one');
                             Kustomer.modal.init(options, (data) => {
                         console.group();
                         console.log(options)
@@ -50,11 +47,16 @@
                         Kustomer.modal.show(options.id);
                         modalMap[options.id] = true;
                     });
+                        }catch(ex){
+                            console.log('Modal does not exist, creating new one');
+                            
                         }
                         
                     }
                     
                     }
+
+                    destroyModal
         </script>
     </head>
     // Add
