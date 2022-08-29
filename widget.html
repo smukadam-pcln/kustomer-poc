@@ -5,14 +5,7 @@
             function loadContext() {
                 // Kustomer.initialize is required for card visibility in panel.
                 Kustomer.initialize(function(contextJSON) {
-                    var customer_attributes = contextJSON.customer.attributes;
-                    if (customer_attributes.emails.length) {
-                        // var email = customer_attributes.emails[0].email;
-                        Kustomer.resize();
-                    } else {
-                        // customer has no email addresses - close the card
-                        Kustomer.close();
-                    }
+                    console.log(contextJSON)
                     
                     
                 });
