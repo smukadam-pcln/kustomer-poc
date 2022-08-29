@@ -1,79 +1,97 @@
 <html>
-    <head>
-        <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
-        <script>
-            var modalMap = {};
-            function loadContext() {
-                // Kustomer.initialize is required for card visibility in panel.
-                Kustomer.initialize(function(contextJSON) {
-                    console.log(contextJSON)
-                });
+   <head>
+      <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
+      <script>
+         var modalMap = {};
 
-                
-                
-                Kustomer.on('context', function(context) {
-                    // Takes action if a routing-status-change has changed
-                    try{    
-                        console.log(context);
-                    }catch(ex){
-                        console.log(context);
-                        console.error(ex);
-                    }
-
-                });
+        function getLastConversation(conversationId){
+            const params = {
+                url: `/v1/conversations/${conversationId}`,
+                method: "GET",
             }
+         
+            Kustomer.request(params, (err, response) => {
+            if (err) {
+                console.error(err);
+            }
+                console.log(response);
+            });
+        }
 
-            function initAndShowModal(){
-                        //Init Modal
-                        const modalUrl = document.getElementById("modalUrl").value;
-                        if(!modalUrl){
-                            alert("Invalid URL");
-                            return;
-                        }
-                    const options = {
-                        id: 'myModal',
-                        title: 'Custom Modal',
-                        url: modalUrl,
-                        height: 1000,
-                        width: 1000,
-                    };
-                    if(Kustomer){
-                        try{
-                            Kustomer.modal.destroy(options.id)
-                            
-                        }catch(ex){
-                            console.log('Modal does not exist, creating new one');
-                            initAndShowModal();
-                        }finally{
-                            Kustomer.modal.init(options, (data) => {
-                        console.group();
-                        console.log(options)
-                        console.log(data)
-                        console.groupEnd();
-                        Kustomer.modal.show(options.id);
-                        modalMap[options.id] = true;
-                    });
-                        }
-                        
-                    }
-                    
-                    }
-
-                    
-        </script>
-    </head>
-    <body onload="loadContext()">
-        <div class="ui card mainCard">
-            <div class="content">
-                <div class="ui header cardHeader">
-                    Kustomer Modals POC
-                </div>
+         function loadContext() {
+             // Kustomer.initialize is required for card visibility in panel.
+             Kustomer.initialize(function(contextJSON) {
+                 console.log(contextJSON)
+                 if(Kustomer?.attributes?.lastConversation?.id){
+                    getLastConversation(Kustomer?.attributes?.lastConversation?.id)
+                 }
+             });
+             
+             
+             Kustomer.on('context', function(context) {
+                 // Takes action if a routing-status-change has changed
+                 try{    
+                     console.log(context);
+                 }catch(ex){
+                     console.log(context);
+                     console.error(ex);
+                 }
+         
+             });
+         }
+         
+         function initAndShowModal(){
+                     //Init Modal
+                     const modalUrl = document.getElementById("modalUrl").value;
+                     if(!modalUrl){
+                         alert("Invalid URL");
+                         return;
+                     }
+                 const options = {
+                     id: 'myModal',
+                     title: 'Custom Modal',
+                     url: modalUrl,
+                     height: 1000,
+                     width: 1000,
+                 };
+                 if(Kustomer){
+                     try{
+                         Kustomer.modal.destroy(options.id)
+                         
+                     }catch(ex){
+                         console.log('Modal does not exist, creating new one');
+                         initAndShowModal();
+                     }finally{
+                         Kustomer.modal.init(options, (data) => {
+                     console.group();
+                     console.log(options)
+                     console.log(data)
+                     console.groupEnd();
+                     Kustomer.modal.show(options.id);
+                     modalMap[options.id] = true;
+                 });
+                     }
+                     
+                 }
+                 
+                 }
+         
+                 
+      </script>
+   </head>
+   <body onload="loadContext()">
+      <div class="ui card mainCard">
+         <div class="content">
+            <div class="ui header cardHeader">
+               Kustomer Modals POC
             </div>
-            <hr class="lineBreak"><br/><br/>
-            <div id="container" class="ui one textArea"></div>
-            <input type="text" id="modalUrl" />
-            <button onclick="initAndShowModal()">Open URL in modal</button>
-            <div id="eventLog"></div>
-        </div>
-    </body>
+         </div>
+         <hr class="lineBreak">
+         <br/><br/>
+         <div id="container" class="ui one textArea"></div>
+         <input type="text" id="modalUrl" />
+         <button onclick="initAndShowModal()">Open URL in modal</button>
+         <div id="eventLog"></div>
+      </div>
+   </body>
 </html>
