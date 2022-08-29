@@ -2,7 +2,7 @@
     <head>
         <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
         <script>
-            var modalList = [];
+            var modalMap = {};
             function loadContext() {
                 // Kustomer.initialize is required for card visibility in panel.
                 Kustomer.initialize(function(contextJSON) {
@@ -48,6 +48,7 @@
                         console.log(data)
                         console.groupEnd();
                         Kustomer.modal.show(options.id);
+                        modalMap[options.id] = true;
                     });
                         }
                         
