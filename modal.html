@@ -32,15 +32,6 @@
              
          }
 
-         function authorizeCall(isValidated){
-            if(Kustomer){
-                lastConversationObj?.customer?.attributes?.custom["customerValidationSuccessfulBool"] = isValidated;
-
-            }else{
-                console.error('Kustomer obj not found')
-            }
-         }
-
          function updateConversationAttributes(conversationId, ){
             custom
             const params = {
@@ -61,14 +52,21 @@
             });
          }
          
-                 
+         function authorizeCall(isValidated){
+            if(Kustomer){
+                lastConversationObj?.customer?.attributes?.custom["customerValidationSuccessfulBool"] = isValidated;
+
+            }else{
+                console.error('Kustomer obj not found')
+            }
+         }    
       </script>
    </head>
    <body onload="loadContext()">
       <div class="ui card mainCard">
          <div class="content">
             <div class="ui header cardHeader">
-               Modal content
+               Caller Authentication
             </div>
          </div>
          <hr class="lineBreak">
