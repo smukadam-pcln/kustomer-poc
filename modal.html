@@ -3,12 +3,13 @@
       <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
       <script>
         var lastConversationObj = null;
-
-        function getLastConversation(){
-            const queryParams = new Proxy(new URLSearchParams(window.location.search), {
+        const queryParams = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
             let conversationId = queryParams.conversationId
+
+        function getLastConversation(){
+            
 
             const params = {
                 url: `/v1/conversations/${conversationId}`,
@@ -64,6 +65,7 @@
                 url: `/v1/conversations/${conversationId}`,
                 method: "PATCH",
                 body: {
+                    id: conversationId,
                     custom:{
                         customerValidationSuccessfulBool: true
                     }
