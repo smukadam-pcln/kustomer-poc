@@ -41,13 +41,13 @@
 
          function loadContext() {
              // Kustomer.initialize is required for card visibility in panel.
-             getConversations()
+             getLastConversation()
              Kustomer.initialize(function(contextJSON) {
                  console.log(contextJSON)
-                 getConversations();
-                 if(contextJSON?.customer?.attributes?.lastConversation?.id){
-                    getLastConversation(contextJSON?.customer?.attributes?.lastConversation?.id)
-                 }
+                 getLastConversation();
+                //  if(contextJSON?.customer?.attributes?.lastConversation?.id){
+                //     getLastConversation(contextJSON?.customer?.attributes?.lastConversation?.id)
+                //  }
              });
              
              
