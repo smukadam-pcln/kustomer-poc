@@ -6,7 +6,7 @@
 
         function getLastConversation(conversationId){
             const params = {
-                url: `/v1/conversations/${conversationId}`,
+                url: `/v1/conversations/630ca3f4150f6e276d9e3a0d`,
                 method: "GET",
             }
          
@@ -20,6 +20,9 @@
 
          function loadContext() {
              // Kustomer.initialize is required for card visibility in panel.
+             try{
+
+             }catch(ex){console.error(ex)}
              Kustomer.initialize(function(contextJSON) {
                  console.log(contextJSON)
                  if(contextJSON?.customer?.attributes?.lastConversation?.id){
