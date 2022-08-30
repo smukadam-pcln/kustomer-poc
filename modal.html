@@ -19,14 +19,33 @@
             });
         }
 
+        function getConversations(){
+            const params = {
+                url: `/v1/conversations`,
+                method: "GET",
+            }
+         
+            Kustomer.request(params, (err, response) => {
+            if (err) {
+                console.error(err);
+            }
+                console.log(response);
+                lastConversationObj = response;
+            });
+        }
+
          function loadContext() {
              // Kustomer.initialize is required for card visibility in panel.
+             getConversations()
              Kustomer.initialize(function(contextJSON) {
                  console.log(contextJSON)
+                 getConversations();
                  if(contextJSON?.customer?.attributes?.lastConversation?.id){
                     getLastConversation(contextJSON?.customer?.attributes?.lastConversation?.id)
                  }
              });
+
+             Kustomer.
              
              
              
