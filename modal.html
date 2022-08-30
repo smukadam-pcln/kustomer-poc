@@ -4,7 +4,12 @@
       <script>
         var lastConversationObj = null;
 
-        function getLastConversation(conversationId){
+        function getLastConversation(){
+            const queryParams = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+            let conversationId = queryParams.conversationId
+
             const params = {
                 url: `/v1/conversations/${conversationId}`,
                 method: "GET",
