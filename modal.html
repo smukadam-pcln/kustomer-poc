@@ -54,7 +54,7 @@
          
          function authorizeCall(isValidated){
             if(Kustomer){
-                lastConversationObj?.customer?.attributes?.custom["customerValidationSuccessfulBool"] = isValidated;
+                lastConversationObj.customer.attributes.custom["customerValidationSuccessfulBool"] = isValidated;
 
             }else{
                 console.error('Kustomer obj not found')
