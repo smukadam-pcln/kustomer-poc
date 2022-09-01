@@ -112,6 +112,17 @@
           } catch (ex) {
             console.error("error creating modal");
             console.error(ex);
+            Kustomer.modal.destroyAll();
+            setTimeout(() => {
+              Kustomer.modal.init(options, (data) => {
+                console.group();
+                console.log(options);
+                console.log(data);
+                console.groupEnd();
+                Kustomer.modal.show(options.id);
+                modalMap[options.id] = true;
+              });
+            });
           } finally {
           }
         }
