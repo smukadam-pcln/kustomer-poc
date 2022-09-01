@@ -51,7 +51,7 @@
               const modalUrl = `${
                 document.getElementById("modalUrl").value
               }?modalId=${context.conversation.id}&conversationId=${context.conversation.id}&firstName=${encodeURIComponent(context.customer.attributes.firstName)}&lastName=${encodeURIComponent(context.customer.attributes.lastName)}`;
-              initAndShowModal(modalId, modalUrl, "Customer Authentication");
+              initAndShowModal(context.conversation.id, modalUrl, "Customer Authentication");
             }
           } catch (ex) {
             console.log(context);
