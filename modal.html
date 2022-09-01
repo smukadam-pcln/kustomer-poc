@@ -79,7 +79,7 @@
               queryParams.modalId,
               "Caller authentication completed"
             );
-          }, 1000);
+          }, 4000);
         });
       }
 
@@ -99,14 +99,14 @@
     <div class="ui card mainCard">
       <hr class="lineBreak" />
       <div class="content" id="authPending">
-        <div class="ui header cardHeader">Customer Info</div><br/>
+        <br />
         <div id="custName"></div>
       </div>
       <div class="content" id="authComplete" style="display: none">
         <div class="ui header cardHeader">Caller validated</div>
         <div><button onClick="closeModal()">Close</button></div>
       </div>
-      
+
       <br /><br />
       <div id="container" class="ui one textArea"></div>
       <input
