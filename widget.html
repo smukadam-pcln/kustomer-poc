@@ -41,13 +41,17 @@
               context.conversation &&
               context.conversation.attributes &&
               context.conversation.attributes.custom &&
-              !context.conversation.attributes.custom
-                .customerValidationSuccessfulBool
+              context.conversation.attributes.custom
+                .customerValidationSuccessfulBool !== undefined &&
+              context.conversation.attributes.custom
+                .customerValidationSuccessfulBool === true
             ) {
+              // True logic
+            } else {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
               }?conversationId=${context.conversation.id}`;
-              initAndShowModal(modalUrl, 'Customer Authentication');
+              initAndShowModal(modalUrl, "Customer Authentication");
             }
           } catch (ex) {
             console.log(context);
@@ -74,7 +78,7 @@
             Kustomer.modal.destroy(options.id);
           } catch (ex) {
             console.log("Modal does not exist, creating new one");
-            initAndShowModal(modalUrl, 'Customer Authentication');
+            initAndShowModal(modalUrl, "Customer Authentication");
           } finally {
             Kustomer.modal.init(options, (data) => {
               console.group();
