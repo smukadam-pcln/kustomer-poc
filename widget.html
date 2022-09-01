@@ -1,97 +1,107 @@
-<html>
-   <head>
-      <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
-      <script>
-         var modalMap = {};
+<html lang="en">
+  <head>
+    <title>Kustomer POC</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
+    <script>
+      var modalMap = {};
 
-        function getLastConversation(conversationId){
-            const params = {
-                url: `/v1/conversations/630ca3f4150f6e276d9e3a0d`,
-                method: "GET",
+      function getLastConversation(conversationId) {
+        const params = {
+          url: `/v1/conversations/630ca3f4150f6e276d9e3a0d`,
+          method: "GET",
+        };
+
+        Kustomer.request(params, (err, response) => {
+          if (err) {
+            console.error(err);
+          }
+          console.log(response);
+        });
+      }
+
+      function loadContext() {
+        // Kustomer.initialize is required for card visibility in panel.
+        Kustomer.initialize(function (contextJSON) {
+          console.log(contextJSON);
+          if (contextJSON?.customer?.attributes?.lastConversation?.id) {
+            getLastConversation(
+              contextJSON?.customer?.attributes?.lastConversation?.id
+            );
+          }
+        });
+
+        Kustomer.on("context", function (context) {
+          // Takes action if a routing-status-change has changed
+          try {
+            console.log(context);
+            if (
+              context &&
+              context.conversation &&
+              context.conversation.attributes &&
+              context.conversation.attributes.custom &&
+              !context.conversation.attributes.custom
+                .customerValidationSuccessfulBool
+            ) {
+              const modalUrl = `${
+                document.getElementById("modalUrl").value
+              }?conversationId=${conversationId}`;
+              initAndShowModal(modalUrl, 'Customer Authentication');
             }
-         
-            Kustomer.request(params, (err, response) => {
-            if (err) {
-                console.error(err);
-            }
-                console.log(response);
-            });
+          } catch (ex) {
+            console.log(context);
+            console.error(ex);
+          }
+        });
+      }
+
+      function initAndShowModal(modalUrl, title) {
+        //Init Modal
+        if (!modalUrl) {
+          alert("Invalid URL");
+          return;
         }
-
-         function loadContext() {
-             // Kustomer.initialize is required for card visibility in panel.
-             Kustomer.initialize(function(contextJSON) {
-                 console.log(contextJSON)
-                 if(contextJSON?.customer?.attributes?.lastConversation?.id){
-                    getLastConversation(contextJSON?.customer?.attributes?.lastConversation?.id)
-                 }
-             });
-             
-             
-             Kustomer.on('context', function(context) {
-                 // Takes action if a routing-status-change has changed
-                 try{    
-                     console.log(context);
-                 }catch(ex){
-                     console.log(context);
-                     console.error(ex);
-                 }
-         
-             });
-         }
-         
-         function initAndShowModal(){
-                     //Init Modal
-                     const modalUrl = document.getElementById("modalUrl").value;
-                     if(!modalUrl){
-                         alert("Invalid URL");
-                         return;
-                     }
-                 const options = {
-                     id: 'myModal',
-                     title: 'Custom Modal',
-                     url: modalUrl+'?conversationId=630ca3f4150f6e276d9e3a0d',
-                     height: 1000,
-                     width: 1000,
-                 };
-                 if(Kustomer){
-                     try{
-                         Kustomer.modal.destroy(options.id)
-                         
-                     }catch(ex){
-                         console.log('Modal does not exist, creating new one');
-                         initAndShowModal();
-                     }finally{
-                         Kustomer.modal.init(options, (data) => {
-                     console.group();
-                     console.log(options)
-                     console.log(data)
-                     console.groupEnd();
-                     Kustomer.modal.show(options.id);
-                     modalMap[options.id] = true;
-                 });
-                     }
-                     
-                 }
-                 
-                 }
-         
-                 
-      </script>
-   </head>
-   <body onload="loadContext()">
-      <div class="ui card mainCard">
-         <div class="content">
-            <div class="ui header cardHeader">
-               Kustomer Modals POC
-            </div>
-         </div>
-         <hr class="lineBreak">
-         <br/><br/>
-         <div id="container" class="ui one textArea"></div>
-         <input type="text" id="modalUrl" value="https://smukadam-pcln.github.io/kustomer-poc/modal.html" />
-         <button onclick="initAndShowModal()">Open URL in modal</button>
-         <div id="eventLog"></div>
-      </div>
-   </body>
+        const options = {
+          id: "myModal",
+          title: title,
+          url: modalUrl,
+          height: 1000,
+          width: 1000,
+        };
+        if (Kustomer) {
+          try {
+            Kustomer.modal.destroy(options.id);
+          } catch (ex) {
+            console.log("Modal does not exist, creating new one");
+            initAndShowModal(modalUrl, 'Customer Authentication');
+          } finally {
+            Kustomer.modal.init(options, (data) => {
+              console.group();
+              console.log(options);
+              console.log(data);
+              console.groupEnd();
+              Kustomer.modal.show(options.id);
+              modalMap[options.id] = true;
+            });
+          }
+        }
+      }
+    </script>
+  </head>
+  <body onload="loadContext()">
+    <div class="ui card mainCard">
+      <br /><br />
+      <div id="container" class="ui one textArea"></div>
+      <label for="modalUrl">URL:</label>
+      <input
+        type="text"
+        name="modalUrl"
+        id="modalUrl"
+        value="https://smukadam-pcln.github.io/kustomer-poc/modal.html"
+      />
+      <button onclick="initAndShowModal()">Open URL in modal</button>
+      <div id="eventLog"></div>
+    </div>
+  </body>
 </html>
