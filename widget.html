@@ -24,6 +24,7 @@
       function loadContext() {
         // Kustomer.initialize is required for card visibility in panel.
         Kustomer.initialize(function (contextJSON) {
+          Kustomer.modal.destroyAll();
           // console.log(contextJSON);
           // if (contextJSON?.customer?.attributes?.lastConversation?.id) {
           //   getLastConversation(
@@ -112,7 +113,7 @@
           } catch (ex) {
             console.error("error creating modal");
             console.error(ex);
-            Kustomer.modal.destroyAll();
+            Kustomer.modal.destroy(options.id);
             setTimeout(() => {
               Kustomer.modal.init(options, (data) => {
                 console.group();
