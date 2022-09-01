@@ -74,13 +74,11 @@
             console.error(err);
           }
           console.log(response);
-          setTimeout(() => {
-            Kustomer.modal.hide(
-              queryParams.modalId,
-              "Caller authentication completed"
-            );
-            Kustomer.modal.destroy(queryParams.modalId);
-          }, 0);
+          Kustomer.modal.hide(
+            queryParams.modalId,
+            "Caller authentication completed"
+          );
+          Kustomer.modal.destroy(queryParams.modalId);
         });
       }
 
