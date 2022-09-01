@@ -76,20 +76,29 @@
             console.error(err);
           }
           console.log(response);
-          Kustomer.modal.destroy(queryParams.modalId);
+          document.getElementById("authPending").style.display = "none";
+          document.getElementById("authComplete").style.display = "block";
         });
       }
 
       function authorizeCall(authStatus) {
         updateConversationAttributes(conversationId, authStatus);
       }
+
+      function closeModal() {
+        Kustomer.modal.destroy(queryParams.modalId);
+      }
     </script>
   </head>
   <body onload="loadContext()">
     <div class="ui card mainCard">
-      <div class="content">
+      <div class="content" id="authPending">
         <div class="ui header cardHeader">Customer Info</div>
         <div id="custName"></div>
+      </div>
+      <div class="content" id="authComplete" style="display: none">
+        <div class="ui header cardHeader">Caller validated</div>
+        <div><button onClick="closeModal()">Close</button></div>
       </div>
       <hr class="lineBreak" />
       <br /><br />
