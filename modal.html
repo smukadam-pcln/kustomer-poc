@@ -10,9 +10,6 @@
         }
       );
       let conversationId = queryParams.conversationId;
-      document.getElementById(
-        "custName"
-      ).innerHTML = `Customer Name: ${queryParams.firstName} ${queryParams.lastName}`;
 
       function getLastConversation() {
         const params = {
@@ -69,7 +66,7 @@
               customerValidationSuccessfulBool: authStatus,
             },
           },
-          targetModal: queryParams.modalId
+          targetModal: queryParams.modalId,
         };
 
         Kustomer.request(params, (err, response) => {
@@ -77,10 +74,12 @@
             console.error(err);
           }
           console.log(response);
-          Kustomer.modal.hide(
-          queryParams.modalId,
-          "Caller authentication completed"
-        );
+          setTimeout(() => {
+            Kustomer.modal.hide(
+              queryParams.modalId,
+              "Caller authentication completed"
+            );
+          }, 1000);
         });
       }
 
@@ -98,15 +97,16 @@
   </head>
   <body onload="loadContext()">
     <div class="ui card mainCard">
+      <hr class="lineBreak" />
       <div class="content" id="authPending">
-        <div class="ui header cardHeader">Customer Info</div>
-        <div id="custName"></div>
+        <div class="ui header cardHeader">Customer Info</div><br/>
+        <label>Customer Name: </label></label><div id="custName"></div>
       </div>
       <div class="content" id="authComplete" style="display: none">
         <div class="ui header cardHeader">Caller validated</div>
         <div><button onClick="closeModal()">Close</button></div>
       </div>
-      <hr class="lineBreak" />
+      
       <br /><br />
       <div id="container" class="ui one textArea"></div>
       <input
@@ -123,5 +123,10 @@
       />
       <div id="eventLog"></div>
     </div>
+    <script>
+      document.getElementById(
+        "custName"
+      ).innerHTML = `${queryParams.firstName} ${queryParams.lastName}`;
+    </script>
   </body>
 </html>
