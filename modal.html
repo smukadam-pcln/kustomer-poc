@@ -77,8 +77,10 @@
             console.error(err);
           }
           console.log(response);
-          document.getElementById("authPending").style.display = "none";
-          document.getElementById("authComplete").style.display = "block";
+          Kustomer.modal.hide(
+          queryParams.modalId,
+          "Caller authentication completed"
+        );
         });
       }
 
