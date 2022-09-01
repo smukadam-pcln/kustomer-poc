@@ -46,7 +46,7 @@
             ) {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
-              }?conversationId=${conversationId}`;
+              }?conversationId=${context.conversation.id}`;
               initAndShowModal(modalUrl, 'Customer Authentication');
             }
           } catch (ex) {
