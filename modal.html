@@ -76,6 +76,7 @@
             console.error(err);
           }
           console.log(response);
+          Kustomer.modal.destroy(queryParams.modalId);
         });
       }
 

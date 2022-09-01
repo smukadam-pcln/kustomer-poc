@@ -50,8 +50,8 @@
             } else {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
-              }?conversationId=${context.conversation.id}&firstName=${encodeURIComponent(context.customer.attributes.firstName)}&lastName=${encodeURIComponent(context.customer.attributes.lastName)}`;
-              initAndShowModal(modalUrl, "Customer Authentication");
+              }?modalId=${context.conversation.id}&conversationId=${context.conversation.id}&firstName=${encodeURIComponent(context.customer.attributes.firstName)}&lastName=${encodeURIComponent(context.customer.attributes.lastName)}`;
+              initAndShowModal(modalId, modalUrl, "Customer Authentication");
             }
           } catch (ex) {
             console.log(context);
@@ -60,25 +60,25 @@
         });
       }
 
-      function initAndShowModal(modalUrl, title) {
+      function initAndShowModal(modalId, modalUrl, title) {
         //Init Modal
         if (!modalUrl) {
           alert("Invalid URL");
           return;
         }
         const options = {
-          id: "myModal",
+          id: modalId,
           title: title,
           url: modalUrl,
-          height: 1000,
-          width: 1000,
+          height: '80vh',
+          width: '1000vw',
         };
         if (Kustomer) {
           try {
             Kustomer.modal.destroy(options.id);
           } catch (ex) {
             console.log("Modal does not exist, creating new one");
-            initAndShowModal(modalUrl, "Customer Authentication");
+            initAndShowModal(modalId, modalUrl, "Customer Authentication");
           } finally {
             Kustomer.modal.init(options, (data) => {
               console.group();
