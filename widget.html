@@ -85,12 +85,22 @@
           width: "1000vw",
         };
         if (Kustomer) {
+          // try {
+          //   Kustomer.modal.destroy(options.id);
+          // } catch (ex) {
+          //   console.log("Modal does not exist, creating new one");
+          //   initAndShowModal(modalId, modalUrl, "Customer Authentication");
+          // } finally {
+          //   Kustomer.modal.init(options, (data) => {
+          //     console.group();
+          //     console.log(options);
+          //     console.log(data);
+          //     console.groupEnd();
+          //     Kustomer.modal.show(options.id);
+          //     modalMap[options.id] = true;
+          //   });
+          // }
           try {
-            Kustomer.modal.destroy(options.id);
-          } catch (ex) {
-            console.log("Modal does not exist, creating new one");
-            initAndShowModal(modalId, modalUrl, "Customer Authentication");
-          } finally {
             Kustomer.modal.init(options, (data) => {
               console.group();
               console.log(options);
@@ -99,6 +109,10 @@
               Kustomer.modal.show(options.id);
               modalMap[options.id] = true;
             });
+          } catch (ex) {
+            console.error("error creating modal");
+            console.error(ex);
+          } finally {
           }
         }
       }
