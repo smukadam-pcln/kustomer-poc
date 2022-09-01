@@ -86,7 +86,10 @@
       }
 
       function closeModal() {
-        Kustomer.modal.destroy(queryParams.modalId);
+        Kustomer.modal.hide(
+          queryParams.modalId,
+          "Caller authentication completed"
+        );
       }
     </script>
   </head>
