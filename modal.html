@@ -79,7 +79,8 @@
               queryParams.modalId,
               "Caller authentication completed"
             );
-          }, 5000);
+            Kustomer.modal.destroy(queryParams.modalId);
+          }, 0);
         });
       }
 
