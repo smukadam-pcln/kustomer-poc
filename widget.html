@@ -46,12 +46,23 @@
               context.conversation.attributes.custom
                 .customerValidationSuccessfulBool === true
             ) {
-              // True logic
+              // Close if true
+              Kustomer.modal.hide(context.conversation.id);
             } else {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
-              }?modalId=${context.conversation.id}&conversationId=${context.conversation.id}&firstName=${encodeURIComponent(context.customer.attributes.firstName)}&lastName=${encodeURIComponent(context.customer.attributes.lastName)}`;
-              initAndShowModal(context.conversation.id, modalUrl, "Customer Authentication");
+              }?modalId=${context.conversation.id}&conversationId=${
+                context.conversation.id
+              }&firstName=${encodeURIComponent(
+                context.customer.attributes.firstName
+              )}&lastName=${encodeURIComponent(
+                context.customer.attributes.lastName
+              )}`;
+              initAndShowModal(
+                context.conversation.id,
+                modalUrl,
+                "Customer Authentication"
+              );
             }
           } catch (ex) {
             console.log(context);
@@ -70,8 +81,8 @@
           id: modalId,
           title: title,
           url: modalUrl,
-          height: '80vh',
-          width: '1000vw',
+          height: "80vh",
+          width: "1000vw",
         };
         if (Kustomer) {
           try {
