@@ -60,13 +60,13 @@
         }
       }
 
-      function updateConversationAttributes(conversationId) {
+      function updateConversationAttributes(conversationId, authStatus) {
         const params = {
           url: `/v1/conversations/${conversationId}`,
           method: "PATCH",
           body: {
             custom: {
-              customerValidationSuccessfulBool: true,
+              customerValidationSuccessfulBool: authStatus,
             },
           },
         };
@@ -80,8 +80,8 @@
         });
       }
 
-      function authorizeCall(isValidated) {
-        updateConversationAttributes(conversationId);
+      function authorizeCall(authStatus) {
+        updateConversationAttributes(conversationId, authStatus);
       }
     </script>
   </head>
