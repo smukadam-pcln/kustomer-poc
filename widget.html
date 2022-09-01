@@ -24,12 +24,12 @@
       function loadContext() {
         // Kustomer.initialize is required for card visibility in panel.
         Kustomer.initialize(function (contextJSON) {
-          console.log(contextJSON);
-          if (contextJSON?.customer?.attributes?.lastConversation?.id) {
-            getLastConversation(
-              contextJSON?.customer?.attributes?.lastConversation?.id
-            );
-          }
+          // console.log(contextJSON);
+          // if (contextJSON?.customer?.attributes?.lastConversation?.id) {
+          //   getLastConversation(
+          //     contextJSON?.customer?.attributes?.lastConversation?.id
+          //   );
+          // }
         });
 
         Kustomer.on("context", function (context) {
