@@ -100,7 +100,7 @@
       <hr class="lineBreak" />
       <div class="content" id="authPending">
         <div class="ui header cardHeader">Customer Info</div><br/>
-        <label>Customer Name: </label></label><div id="custName"></div>
+        
       </div>
       <div class="content" id="authComplete" style="display: none">
         <div class="ui header cardHeader">Caller validated</div>
@@ -126,7 +126,7 @@
     <script>
       document.getElementById(
         "custName"
-      ).innerHTML = `${queryParams.firstName} ${queryParams.lastName}`;
+      ).innerHTML = `<div id="custName"><label>Customer Name: </label>${queryParams.firstName} ${queryParams.lastName}</div>`;
     </script>
   </body>
 </html>
