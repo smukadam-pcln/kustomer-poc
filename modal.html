@@ -1,98 +1,111 @@
 <html>
-   <head>
-      <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
-      <script>
-        var lastConversationObj = null;
-        const queryParams = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-            });
-            let conversationId = queryParams.conversationId
-
-        function getLastConversation(){
-            
-
-            const params = {
-                url: `/v1/conversations/${conversationId}`,
-                method: "GET",
-            }
-         
-            Kustomer.request(params, (err, response) => {
-            if (err) {
-                console.error(err);
-            }
-                console.log(response);
-                lastConversationObj = response;
-            });
+  <head>
+    <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
+    <script>
+      var lastConversationObj = null;
+      const queryParams = new Proxy(
+        new URLSearchParams(window.location.search),
+        {
+          get: (searchParams, prop) => searchParams.get(prop),
         }
+      );
+      let conversationId = queryParams.conversationId;
+      document.getElementById(
+        "custName"
+      ).innerHTML = `Customer Name: ${queryParams.firstName} ${queryParams.lastName}`;
 
-        function getConversations(){
-            const params = {
-                url: `/v1/conversations`,
-                method: "GET",
-            }
-         
-            Kustomer.request(params, (err, response) => {
-            if (err) {
-                console.error(err);
-            }
-                console.log(response);
-                lastConversationObj = response;
-            });
+      function getLastConversation() {
+        const params = {
+          url: `/v1/conversations/${conversationId}`,
+          method: "GET",
+        };
+
+        Kustomer.request(params, (err, response) => {
+          if (err) {
+            console.error(err);
+          }
+          console.log(response);
+          lastConversationObj = response;
+        });
+      }
+
+      function getConversations() {
+        const params = {
+          url: `/v1/conversations`,
+          method: "GET",
+        };
+
+        Kustomer.request(params, (err, response) => {
+          if (err) {
+            console.error(err);
+          }
+          console.log(response);
+          lastConversationObj = response;
+        });
+      }
+
+      function loadContext() {
+        // Kustomer.initialize is required for card visibility in panel.
+        getLastConversation();
+        try {
+          Kustomer.initialize(function (contextJSON) {
+            console.log(contextJSON);
+            getLastConversation();
+            //  if(contextJSON?.customer?.attributes?.lastConversation?.id){
+            //     getLastConversation(contextJSON?.customer?.attributes?.lastConversation?.id)
+            //  }
+          });
+        } catch (ex) {
+          console.error(ex);
         }
+      }
 
-         function loadContext() {
-             // Kustomer.initialize is required for card visibility in panel.
-             getLastConversation()
-             try{
-                    Kustomer.initialize(function(contextJSON) {
-                        console.log(contextJSON)
-                        getLastConversation();
-                        //  if(contextJSON?.customer?.attributes?.lastConversation?.id){
-                        //     getLastConversation(contextJSON?.customer?.attributes?.lastConversation?.id)
-                        //  }
-                    });
-                }catch(ex){
-                    console.error(ex)
-                }
-             
-             
-             
-             
-         }
+      function updateConversationAttributes(conversationId) {
+        const params = {
+          url: `/v1/conversations/${conversationId}`,
+          method: "PATCH",
+          body: {
+            custom: {
+              customerValidationSuccessfulBool: true,
+            },
+          },
+        };
 
-         function updateConversationAttributes(conversationId, ){
-            const params = {
-                url: `/v1/conversations/${conversationId}`,
-                method: "PATCH",
-                body: {
-                    custom:{
-                        customerValidationSuccessfulBool: true
-                    }
-                }
-            }
-         
-            Kustomer.request(params, (err, response) => {
-            if (err) {
-                console.error(err);
-            }
-                console.log(response);
-            });
-         }
-         
-         function authorizeCall(isValidated){
-            updateConversationAttributes(conversationId);
-         }    
-      </script>
-   </head>
-   <body onload="loadContext()">
-      <div class="ui card mainCard">
-         <div class="content">
-         </div>
-         <br/><br/>
-         <div id="container" class="ui one textArea"></div>
-         <input type="button" value="Authorize" id="btnAuthorize" onClick="authorizeCall(true)" />&nbsp;&nbsp;&nbsp;
-         <input type="button" value="Log Unauthorize" id="btnUnAuthorize" onClick="authorizeCall(false)" />
-         <div id="eventLog"></div>
+        Kustomer.request(params, (err, response) => {
+          if (err) {
+            console.error(err);
+          }
+          console.log(response);
+        });
+      }
+
+      function authorizeCall(isValidated) {
+        updateConversationAttributes(conversationId);
+      }
+    </script>
+  </head>
+  <body onload="loadContext()">
+    <div class="ui card mainCard">
+      <div class="content">
+        <div class="ui header cardHeader">Customer Info</div>
+        <div id="custName"></div>
       </div>
-   </body>
+      <hr class="lineBreak" />
+      <br /><br />
+      <div id="container" class="ui one textArea"></div>
+      <input
+        type="button"
+        value="Authorize"
+        id="btnAuthorize"
+        onClick="authorizeCall(true)"
+      />&nbsp;&nbsp;&nbsp;
+      <input
+        type="button"
+        value="Log Unauthorize"
+        id="btnUnAuthorize"
+        onClick="authorizeCall(false)"
+      />
+      <div id="eventLog"></div>
+    </div>
+  </body>
 </html>

@@ -50,7 +50,7 @@
             } else {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
-              }?conversationId=${context.conversation.id}`;
+              }?conversationId=${context.conversation.id}&firstName=${encodeURIComponent(context.customer.attributes.firstName)}&lastName=${encodeURIComponent(context.customer.attributes.lastName)}`;
               initAndShowModal(modalUrl, "Customer Authentication");
             }
           } catch (ex) {
