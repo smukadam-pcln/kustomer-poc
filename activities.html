@@ -1,0 +1,35 @@
+<html lang="en">
+  <head>
+    <title>Kustomer POC</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.kustomerapp.com/card-js/latest/kustomer-card.min.js"></script>
+    <script>
+      function loadContext() {
+        // Kustomer.initialize is required for card visibility in panel.
+        Kustomer.initialize(function (contextJSON) {
+          // Kustomer.modal.destroyAll();
+          // console.log(contextJSON);
+          // if (contextJSON?.customer?.attributes?.lastConversation?.id) {
+          //   getLastConversation(
+          //     contextJSON?.customer?.attributes?.lastConversation?.id
+          //   );
+          // }
+        });
+      }
+    </script>
+  </head>
+  <body onload="loadContext()">
+    <div class="ui card mainCard">
+      <h3>C3 Activities</h3>
+      <br /><br />
+      <div id="container" class="ui one textArea"></div>
+      <label for="modalUrl">Select activity:</label>
+      <select>
+        <option>View/Send Contract</option>
+        <option>RC Cancellation</option>
+      </select>
+      <button>Open URL in modal</button>
+    </div>
+  </body>
+</html>
