@@ -8,6 +8,9 @@
       function loadContext() {
         // Kustomer.initialize is required for card visibility in panel.
         Kustomer.initialize(function (contextJSON) {
+          console.group("Context");
+          console.log(contextJSON);
+          console.groupEnd();
           document.getElementById("json").textContent = JSON.stringify(
             contextJSON,
             undefined,
