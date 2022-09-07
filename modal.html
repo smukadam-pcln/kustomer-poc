@@ -74,11 +74,15 @@
             console.error(err);
           }
           console.log(response);
-          Kustomer.modal.hide(
+          setTimeout(()=>{
+            Kustomer.modal.hide(
             queryParams.modalId,
-            "Caller authentication completed"
+            authStatus
+              ? "Caller authentication completed"
+              : "Caller authentication required"
           );
           Kustomer.modal.destroy(queryParams.modalId);
+          },2000)
         });
       }
 
