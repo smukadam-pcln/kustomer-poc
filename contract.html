@@ -8,25 +8,18 @@
       function loadContext() {
         // Kustomer.initialize is required for card visibility in panel.
         Kustomer.initialize(function (contextJSON) {
-          document.getElementById("json").textContent = JSON.stringify(
-            contextJSON,
-            undefined,
-            2
-          );
+          // Kustomer.modal.destroyAll();
+          // console.log(contextJSON);
+          // if (contextJSON?.customer?.attributes?.lastConversation?.id) {
+          //   getLastConversation(
+          //     contextJSON?.customer?.attributes?.lastConversation?.id
+          //   );
+          // }
         });
       }
     </script>
   </head>
   <body onload="loadContext()">
-    <div class="ui card mainCard">
-      <br /><br />
-      <div id="container" class="ui one textArea"></div>
-      <select>
-        <option>Select Activity</option>
-        <option>View/Send Contract</option>
-        <option>RC Cancellation</option></select
-      >&nbsp;&nbsp;&nbsp; <button>Continue</button><br /><br />
-      <pre id="json"></pre>
-    </div>
+    <div class="ui card mainCard">View/Send Contract</div>
   </body>
 </html>
