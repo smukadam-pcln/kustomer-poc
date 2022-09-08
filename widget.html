@@ -33,6 +33,10 @@
           // }
         });
 
+        Kustomer.on("close", function (context) {
+          console.log("modal closed")
+        })
+
         Kustomer.on("context", function (context) {
           // Takes action if a routing-status-change has changed
           try {
@@ -60,7 +64,7 @@
                 context.customer.attributes.lastName
               )}`;
               initAndShowModal(
-                context.conversation.id,
+                context.customer.attributes.lastConversation.id,
                 modalUrl,
                 "Customer Authentication"
               );
