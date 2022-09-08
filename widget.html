@@ -35,8 +35,8 @@
         });
 
         Kustomer.on("close", function (context) {
-          console.log("modal closed")
-        })
+          console.log("modal closed");
+        });
 
         Kustomer.on("context", function (context) {
           // Takes action if a routing-status-change has changed
@@ -87,8 +87,8 @@
           id: modalId,
           title: title,
           url: modalUrl,
-          height: "1000",
-          width: "1000",
+          height: Math.ceil(window.screen.availHeight * 0.8),
+          width: Math.ceil(window.screen.availWidth * 0.8),
         };
         if (Kustomer) {
           // try {
