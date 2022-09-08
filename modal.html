@@ -45,9 +45,7 @@
         // Kustomer.initialize is required for card visibility in panel.
         getLastConversation();
         try {
-          Kustomer.initialize(function (contextJSON) {
-            Kustomer.modal.resize({ height: 1000, width: 1000 });
-          });
+          Kustomer.modal.resize({ height: 1000, width: 1000 });
         } catch (ex) {
           console.error(ex);
         }
