@@ -75,7 +75,7 @@
             const modalUrl = `${
               document.getElementById("modalUrl").value
             }?modalId=${context.conversation.id}&conversationId=${
-              context.conversation.id
+              context.customer.attributes.lastConversation.id
             }&firstName=${encodeURIComponent(
               context.customer.attributes.firstName
             )}&lastName=${encodeURIComponent(
