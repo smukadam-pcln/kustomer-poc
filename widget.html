@@ -55,22 +55,24 @@
               // Close if true
               // Kustomer.modal.hide(context.conversation.id);
               Kustomer.modal.destroyAll();
-            } else if (
-              !currentCustomerId ||
-              (currentCustomerId &&
-                currentCustomerId !==
-                  context.customer.attributes.lastConversation.id &&
-                context &&
-                context.conversation &&
-                context.conversation.attributes &&
-                context.conversation.attributes.custom &&
-                (!context.conversation.attributes.custom
-                  .customerValidationSuccessfulBool === undefined ||
-                  (context.conversation.attributes.custom
-                    .customerValidationSuccessfulBool !== undefined &&
-                    context.conversation.attributes.custom
-                      .customerValidationSuccessfulBool === true)))
-            ) {
+            } else
+            //  if (
+            //   !currentCustomerId ||
+            //   (currentCustomerId &&
+            //     currentCustomerId !==
+            //       context.customer.attributes.lastConversation.id &&
+            //     context &&
+            //     context.conversation &&
+            //     context.conversation.attributes &&
+            //     context.conversation.attributes.custom &&
+            //     (!context.conversation.attributes.custom
+            //       .customerValidationSuccessfulBool === undefined ||
+            //       (context.conversation.attributes.custom
+            //         .customerValidationSuccessfulBool !== undefined &&
+            //         context.conversation.attributes.custom
+            //           .customerValidationSuccessfulBool === true)))
+            // ) 
+            {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
               }?modalId=${context.conversation.id}&conversationId=${
