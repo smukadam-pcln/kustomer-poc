@@ -41,52 +41,76 @@
         Kustomer.on("context", function (context) {
           // Takes action if a routing-status-change has changed
           console.log(context);
-          if (
-            context &&
-            context.conversation &&
-            context.conversation.attributes &&
-            context.conversation.attributes.custom &&
-            context.conversation.attributes.custom
-              .customerValidationSuccessfulBool !== undefined &&
-            context.conversation.attributes.custom
-              .customerValidationSuccessfulBool === true
-          ) {
-            // Close if true
-            Kustomer.modal.hide(context.conversation.id);
-            // Kustomer.modal.destroyAll();
-          }
-          //  if (
-          //   !currentCustomerId ||
-          //   (currentCustomerId &&
-          //     currentCustomerId !==
-          //       context.customer.attributes.lastConversation.id &&
-          //     context &&
-          //     context.conversation &&
-          //     context.conversation.attributes &&
-          //     context.conversation.attributes.custom &&
-          //     (!context.conversation.attributes.custom
-          //       .customerValidationSuccessfulBool === undefined ||
-          //       (context.conversation.attributes.custom
-          //         .customerValidationSuccessfulBool !== undefined &&
-          //         context.conversation.attributes.custom
-          //           .customerValidationSuccessfulBool === true)))
-          // )
-          else {
-            const modalUrl = `${
-              document.getElementById("modalUrl").value
-            }?modalId=${context.conversation.id}&conversationId=${
-              context.customer.attributes.lastConversation.id
-            }&firstName=${encodeURIComponent(
-              context.customer.attributes.firstName
-            )}&lastName=${encodeURIComponent(
-              context.customer.attributes.lastName
-            )}`;
-            initAndShowModal(
-              context.customer.attributes.lastConversation.id,
-              modalUrl,
-              "Customer Authentication"
-            );
-          }
+          getLastConversation(
+            context.customer.attributes.lastConversation.id,
+            (customerId, conversationId, isCallerAuthenticated) => {
+              if (
+                !currentCustomerId ||
+                (currentCustomerId &&
+                  currentCustomerId !== currentCustomerId &&
+                  isCallerAuthenticated)
+              ) {
+                const modalUrl = `${
+                  document.getElementById("modalUrl").value
+                }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
+                  "Vinay"
+                )}&lastName=${encodeURIComponent("Mehra")}`;
+                initAndShowModal(
+                  conversationId,
+                  modalUrl,
+                  "Customer Authentication"
+                );
+              } else {
+                Kustomer.modal.hide(conversationId);
+              }
+            }
+          );
+          // if (
+          //   context &&
+          //   context.customer &&
+          //   context.customer.attributes &&
+          //   context.customer.attributes.lastConversation &&
+          //   context.conversation.attributes.custom
+          //     .customerValidationSuccessfulBool !== undefined &&
+          //   context.conversation.attributes.custom
+          //     .customerValidationSuccessfulBool === true
+          // ) {
+          //   // Close if true
+          //   Kustomer.modal.hide(context.conversation.id);
+          //   // Kustomer.modal.destroyAll();
+          // }
+          // //  if (
+          // //   !currentCustomerId ||
+          // //   (currentCustomerId &&
+          // //     currentCustomerId !==
+          // //       context.customer.attributes.lastConversation.id &&
+          // //     context &&
+          // //     context.conversation &&
+          // //     context.conversation.attributes &&
+          // //     context.conversation.attributes.custom &&
+          // //     (!context.conversation.attributes.custom
+          // //       .customerValidationSuccessfulBool === undefined ||
+          // //       (context.conversation.attributes.custom
+          // //         .customerValidationSuccessfulBool !== undefined &&
+          // //         context.conversation.attributes.custom
+          // //           .customerValidationSuccessfulBool === true)))
+          // // )
+          // else {
+          //   const modalUrl = `${
+          //     document.getElementById("modalUrl").value
+          //   }?modalId=${context.conversation.id}&conversationId=${
+          //     context.customer.attributes.lastConversation.id
+          //   }&firstName=${encodeURIComponent(
+          //     context.customer.attributes.firstName
+          //   )}&lastName=${encodeURIComponent(
+          //     context.customer.attributes.lastName
+          //   )}`;
+          //   initAndShowModal(
+          //     context.customer.attributes.lastConversation.id,
+          //     modalUrl,
+          //     "Customer Authentication"
+          //   );
+          // }
         });
       }
 
