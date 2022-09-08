@@ -55,7 +55,22 @@
               // Close if true
               // Kustomer.modal.hide(context.conversation.id);
               Kustomer.modal.destroyAll();
-            } else {
+            } else if (
+              !currentCustomerId ||
+              (currentCustomerId &&
+                currentCustomerId !==
+                  context.customer.attributes.lastConversation.id &&
+                context &&
+                context.conversation &&
+                context.conversation.attributes &&
+                context.conversation.attributes.custom &&
+                (!context.conversation.attributes.custom
+                  .customerValidationSuccessfulBool === undefined ||
+                  (context.conversation.attributes.custom
+                    .customerValidationSuccessfulBool !== undefined &&
+                    context.conversation.attributes.custom
+                      .customerValidationSuccessfulBool === true)))
+            ) {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
               }?modalId=${context.conversation.id}&conversationId=${
@@ -114,7 +129,7 @@
               console.log(data);
               console.groupEnd();
               Kustomer.modal.show(options.id);
-              Kustomer.resize({modal: options.id})
+              Kustomer.resize({ modal: options.id });
               modalMap[options.id] = true;
             });
           } catch (ex) {
@@ -122,15 +137,19 @@
             console.error(ex);
             Kustomer.modal.destroy(options.id);
             setTimeout(() => {
-              Kustomer.modal.init(options, (data) => {
-                console.group();
-                console.log(options);
-                console.log(data);
-                console.groupEnd();
-                Kustomer.modal.show(options.id);
-                Kustomer.resize({modal: options.id})
-                modalMap[options.id] = true;
-              },1000);
+              Kustomer.modal.init(
+                options,
+                (data) => {
+                  console.group();
+                  console.log(options);
+                  console.log(data);
+                  console.groupEnd();
+                  Kustomer.modal.show(options.id);
+                  Kustomer.resize({ modal: options.id });
+                  modalMap[options.id] = true;
+                },
+                1000
+              );
             });
           } finally {
           }
