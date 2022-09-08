@@ -53,7 +53,8 @@
                 .customerValidationSuccessfulBool === true
             ) {
               // Close if true
-              Kustomer.modal.hide(context.conversation.id);
+              // Kustomer.modal.hide(context.conversation.id);
+              Kustomer.modal.destroyAll();
             } else {
               const modalUrl = `${
                 document.getElementById("modalUrl").value
