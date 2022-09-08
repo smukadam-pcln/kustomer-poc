@@ -135,22 +135,23 @@
           } catch (ex) {
             console.error("error creating modal");
             console.error(ex);
-            Kustomer.modal.destroy(options.id);
-            setTimeout(() => {
-              Kustomer.modal.init(
-                options,
-                (data) => {
-                  console.group();
-                  console.log(options);
-                  console.log(data);
-                  console.groupEnd();
-                  Kustomer.modal.show(options.id);
-                  Kustomer.resize({ modal: options.id });
-                  modalMap[options.id] = true;
-                },
-                1000
-              );
-            });
+            Kustomer.modal.show(options.id);
+            // Kustomer.modal.destroy(options.id);
+            // setTimeout(() => {
+            //   Kustomer.modal.init(
+            //     options,
+            //     (data) => {
+            //       console.group();
+            //       console.log(options);
+            //       console.log(data);
+            //       console.groupEnd();
+            //       Kustomer.modal.show(options.id);
+            //       Kustomer.resize({ modal: options.id });
+            //       modalMap[options.id] = true;
+            //     },
+            //     1000
+            //   );
+            // });
           } finally {
           }
         }
