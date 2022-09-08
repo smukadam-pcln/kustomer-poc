@@ -54,7 +54,7 @@
                 !currentCustomerId ||
                 (currentCustomerId &&
                   currentCustomerId !== currentCustomerId &&
-                  isCallerAuthenticated)
+                  !isCallerAuthenticated)
               ) {
                 const modalUrl = `${
                   document.getElementById("modalUrl").value
@@ -130,8 +130,8 @@
           id: modalId,
           title: title,
           url: modalUrl,
-          height: 500,
-          width: 500,
+          height: 1000,
+          width: 1000,
         };
         if (Kustomer) {
           // try {
