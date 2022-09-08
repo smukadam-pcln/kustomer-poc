@@ -87,8 +87,8 @@
           id: modalId,
           title: title,
           url: modalUrl,
-          height: Math.ceil(window.screen.availHeight * 0.8),
-          width: Math.ceil(window.screen.availWidth * 0.8),
+          height: Math.ceil(window.screen.availHeight * 0.8).toString(),
+          width: Math.ceil(window.screen.availWidth * 0.8).toString(),
         };
         if (Kustomer) {
           // try {
@@ -113,6 +113,7 @@
               console.log(data);
               console.groupEnd();
               Kustomer.modal.show(options.id);
+              Kustomer.resize({modal: options.id})
               modalMap[options.id] = true;
             });
           } catch (ex) {
@@ -126,6 +127,7 @@
                 console.log(data);
                 console.groupEnd();
                 Kustomer.modal.show(options.id);
+                Kustomer.resize({modal: options.id})
                 modalMap[options.id] = true;
               });
             });
