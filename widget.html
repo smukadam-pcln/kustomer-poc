@@ -44,8 +44,13 @@
         });
 
         Kustomer.on("context", function (context) {
-          // Takes action if a routing-status-change has changed
+          console.group("Context Update");
           console.log(context);
+          console.log(
+            "last conversation id: " +
+              context.customer.attributes.lastConversation.id
+          );
+          console.groupEnd();
           getLastConversation(
             context.customer.id,
             context.customer.attributes.lastConversation.id,
@@ -151,7 +156,7 @@
           // }
           try {
             Kustomer.modal.init(options, (data) => {
-              console.group();
+              console.group("Init Modal");
               console.log(options);
               console.log(data);
               console.groupEnd();
