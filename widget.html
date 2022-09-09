@@ -8,18 +8,33 @@
       var modalMap = {};
       var currentCustomerId = null;
 
+      function debounce(func, wait, immediate) {
+        var timeout;
+        return function () {
+          var context = this,
+            args = arguments;
+          var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+          };
+          var callNow = immediate && !timeout;
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+          if (callNow) func.apply(context, args);
+        };
+      }
+
       function getLastConversation(customerId, conversationId, cb) {
         const params = {
           url: `/v1/conversations/${conversationId}`,
           method: "GET",
         };
-        
 
         Kustomer.request(params, (err, response) => {
           if (err) {
             console.error(err);
           }
-          console.group("Last conversation Details")
+          console.group("Last conversation Details");
           console.log(response);
           console.groupEnd();
           cb(
@@ -47,84 +62,89 @@
         });
 
         Kustomer.on("context", function (context) {
-          console.group("Context Update");
-          console.log(context);
-          console.log(
-            "last conversation id: " +
-              context.customer.attributes.lastConversation.id
-          );
-          console.groupEnd();
+          // Debounce request to improve performance
+          debounce(function (context) {
+            console.group("Context Update");
+            console.log(context);
+            console.log(
+              "last conversation id: " +
+                context.customer.attributes.lastConversation.id
+            );
+            console.groupEnd();
 
-          console.log("Getting Last conversation details")
-          getLastConversation(
-            context.customer.id,
-            context.customer.attributes.lastConversation.id,
-            (customerId, conversationId, isCallerAuthenticated) => {
-              if (!isCallerAuthenticated) {
-                console.log("Customer is not validated, launching caller auth");
-                const modalUrl = `${
-                  document.getElementById("modalUrl").value
-                }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
-                  "Vinay"
-                )}&lastName=${encodeURIComponent("Mehra")}`;
-                currentCustomerId = customerId;
-                initAndShowModal(
-                  conversationId,
-                  modalUrl,
-                  "Customer Authentication"
-                );
-              } else {
-                console.log("Customer is already validated")
-                Kustomer.modal.hide(conversationId);
+            console.log("Getting Last conversation details");
+            getLastConversation(
+              context.customer.id,
+              context.customer.attributes.lastConversation.id,
+              (customerId, conversationId, isCallerAuthenticated) => {
+                if (!isCallerAuthenticated) {
+                  console.log(
+                    "Customer is not validated, launching caller auth"
+                  );
+                  const modalUrl = `${
+                    document.getElementById("modalUrl").value
+                  }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
+                    "Vinay"
+                  )}&lastName=${encodeURIComponent("Mehra")}`;
+                  currentCustomerId = customerId;
+                  initAndShowModal(
+                    conversationId,
+                    modalUrl,
+                    "Customer Authentication"
+                  );
+                } else {
+                  console.log("Customer is already validated");
+                  Kustomer.modal.hide(conversationId);
+                }
               }
-            }
-          );
-          // if (
-          //   context &&
-          //   context.customer &&
-          //   context.customer.attributes &&
-          //   context.customer.attributes.lastConversation &&
-          //   context.conversation.attributes.custom
-          //     .customerValidationSuccessfulBool !== undefined &&
-          //   context.conversation.attributes.custom
-          //     .customerValidationSuccessfulBool === true
-          // ) {
-          //   // Close if true
-          //   Kustomer.modal.hide(context.conversation.id);
-          //   // Kustomer.modal.destroyAll();
-          // }
-          // //  if (
-          // //   !currentCustomerId ||
-          // //   (currentCustomerId &&
-          // //     currentCustomerId !==
-          // //       context.customer.attributes.lastConversation.id &&
-          // //     context &&
-          // //     context.conversation &&
-          // //     context.conversation.attributes &&
-          // //     context.conversation.attributes.custom &&
-          // //     (!context.conversation.attributes.custom
-          // //       .customerValidationSuccessfulBool === undefined ||
-          // //       (context.conversation.attributes.custom
-          // //         .customerValidationSuccessfulBool !== undefined &&
-          // //         context.conversation.attributes.custom
-          // //           .customerValidationSuccessfulBool === true)))
-          // // )
-          // else {
-          //   const modalUrl = `${
-          //     document.getElementById("modalUrl").value
-          //   }?modalId=${context.conversation.id}&conversationId=${
-          //     context.customer.attributes.lastConversation.id
-          //   }&firstName=${encodeURIComponent(
-          //     context.customer.attributes.firstName
-          //   )}&lastName=${encodeURIComponent(
-          //     context.customer.attributes.lastName
-          //   )}`;
-          //   initAndShowModal(
-          //     context.customer.attributes.lastConversation.id,
-          //     modalUrl,
-          //     "Customer Authentication"
-          //   );
-          // }
+            );
+            // if (
+            //   context &&
+            //   context.customer &&
+            //   context.customer.attributes &&
+            //   context.customer.attributes.lastConversation &&
+            //   context.conversation.attributes.custom
+            //     .customerValidationSuccessfulBool !== undefined &&
+            //   context.conversation.attributes.custom
+            //     .customerValidationSuccessfulBool === true
+            // ) {
+            //   // Close if true
+            //   Kustomer.modal.hide(context.conversation.id);
+            //   // Kustomer.modal.destroyAll();
+            // }
+            // //  if (
+            // //   !currentCustomerId ||
+            // //   (currentCustomerId &&
+            // //     currentCustomerId !==
+            // //       context.customer.attributes.lastConversation.id &&
+            // //     context &&
+            // //     context.conversation &&
+            // //     context.conversation.attributes &&
+            // //     context.conversation.attributes.custom &&
+            // //     (!context.conversation.attributes.custom
+            // //       .customerValidationSuccessfulBool === undefined ||
+            // //       (context.conversation.attributes.custom
+            // //         .customerValidationSuccessfulBool !== undefined &&
+            // //         context.conversation.attributes.custom
+            // //           .customerValidationSuccessfulBool === true)))
+            // // )
+            // else {
+            //   const modalUrl = `${
+            //     document.getElementById("modalUrl").value
+            //   }?modalId=${context.conversation.id}&conversationId=${
+            //     context.customer.attributes.lastConversation.id
+            //   }&firstName=${encodeURIComponent(
+            //     context.customer.attributes.firstName
+            //   )}&lastName=${encodeURIComponent(
+            //     context.customer.attributes.lastName
+            //   )}`;
+            //   initAndShowModal(
+            //     context.customer.attributes.lastConversation.id,
+            //     modalUrl,
+            //     "Customer Authentication"
+            //   );
+            // }
+          }, 2000);
         });
       }
 
