@@ -61,9 +61,7 @@
           console.log("modal closed");
         });
 
-        Kustomer.on("context", function (context) {
-          // Debounce request to improve performance
-          debounce(function (context) {
+        const contextHandlerFunc = debounce((context)=> {
             console.group("Context Update");
             console.log(context);
             console.log(
@@ -145,7 +143,8 @@
             //   );
             // }
           }, 2000);
-        });
+
+        Kustomer.on("context", contextHandlerFunc);
       }
 
       function initAndShowModal(modalId, modalUrl, title) {
