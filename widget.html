@@ -58,7 +58,7 @@
               if (
                 !currentCustomerId ||
                 (currentCustomerId &&
-                  currentCustomerId !== currentCustomerId &&
+                  currentCustomerId !== customerId &&
                   !isCallerAuthenticated)
               ) {
                 const modalUrl = `${
@@ -66,6 +66,7 @@
                 }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
                   "Vinay"
                 )}&lastName=${encodeURIComponent("Mehra")}`;
+                currentCustomerId = customerId
                 initAndShowModal(
                   conversationId,
                   modalUrl,
