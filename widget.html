@@ -51,22 +51,21 @@
               context.customer.attributes.lastConversation.id
           );
           console.groupEnd();
+
           getLastConversation(
             context.customer.id,
             context.customer.attributes.lastConversation.id,
             (customerId, conversationId, isCallerAuthenticated) => {
               if (
                 !currentCustomerId ||
-                (currentCustomerId &&
-                  currentCustomerId !== customerId &&
-                  !isCallerAuthenticated)
+                (currentCustomerId && !isCallerAuthenticated)
               ) {
                 const modalUrl = `${
                   document.getElementById("modalUrl").value
                 }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
                   "Vinay"
                 )}&lastName=${encodeURIComponent("Mehra")}`;
-                currentCustomerId = customerId
+                currentCustomerId = customerId;
                 initAndShowModal(
                   conversationId,
                   modalUrl,
