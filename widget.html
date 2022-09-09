@@ -18,7 +18,9 @@
           if (err) {
             console.error(err);
           }
+          console.group("Last conversation Details")
           console.log(response);
+          console.groupEnd();
           cb(
             customerId,
             conversationId,
@@ -52,11 +54,13 @@
           );
           console.groupEnd();
 
+          console.log("Getting Last conversation details")
           getLastConversation(
             context.customer.id,
             context.customer.attributes.lastConversation.id,
             (customerId, conversationId, isCallerAuthenticated) => {
               if (!isCallerAuthenticated) {
+                console.log("Customer is not validated, launching caller auth");
                 const modalUrl = `${
                   document.getElementById("modalUrl").value
                 }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
@@ -69,6 +73,7 @@
                   "Customer Authentication"
                 );
               } else {
+                console.log("Customer is already validated")
                 Kustomer.modal.hide(conversationId);
               }
             }
