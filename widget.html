@@ -56,10 +56,7 @@
             context.customer.id,
             context.customer.attributes.lastConversation.id,
             (customerId, conversationId, isCallerAuthenticated) => {
-              if (
-                !currentCustomerId ||
-                (currentCustomerId && !isCallerAuthenticated)
-              ) {
+              if (!isCallerAuthenticated) {
                 const modalUrl = `${
                   document.getElementById("modalUrl").value
                 }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
