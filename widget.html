@@ -61,88 +61,86 @@
           console.log("modal closed");
         });
 
-        const contextHandlerFunc = debounce((context)=> {
-            console.group("Context Update");
-            console.log(context);
-            console.log(
-              "last conversation id: " +
-                context.customer.attributes.lastConversation.id
-            );
-            console.groupEnd();
+        const contextHandlerFunc = debounce((context) => {
+          console.group("Context Update");
+          console.log(context);
+          console.log(
+            "last conversation id: " +
+              context.customer.attributes.lastConversation.id
+          );
+          console.groupEnd();
 
-            console.log("Getting Last conversation details");
-            getLastConversation(
-              context.customer.id,
-              context.customer.attributes.lastConversation.id,
-              (customerId, conversationId, isCallerAuthenticated) => {
-                if (!isCallerAuthenticated) {
-                  console.log(
-                    "Customer is not validated, launching caller auth"
-                  );
-                  const modalUrl = `${
-                    document.getElementById("modalUrl").value
-                  }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
-                    "Vinay"
-                  )}&lastName=${encodeURIComponent("Mehra")}`;
-                  currentCustomerId = customerId;
-                  initAndShowModal(
-                    conversationId,
-                    modalUrl,
-                    "Customer Authentication"
-                  );
-                } else {
-                  console.log("Customer is already validated");
-                  Kustomer.modal.hide(conversationId);
-                }
+          console.log("Getting Last conversation details");
+          getLastConversation(
+            context.customer.id,
+            context.customer.attributes.lastConversation.id,
+            (customerId, conversationId, isCallerAuthenticated) => {
+              if (!isCallerAuthenticated) {
+                console.log("Customer is not validated, launching caller auth");
+                const modalUrl = `${
+                  document.getElementById("modalUrl").value
+                }?modalId=${conversationId}&conversationId=${conversationId}&firstName=${encodeURIComponent(
+                  "Vinay"
+                )}&lastName=${encodeURIComponent("Mehra")}`;
+                currentCustomerId = customerId;
+                initAndShowModal(
+                  conversationId,
+                  modalUrl,
+                  "Customer Authentication"
+                );
+              } else {
+                console.log("Customer is already validated");
+                Kustomer.modal.hide(conversationId);
               }
-            );
-            // if (
-            //   context &&
-            //   context.customer &&
-            //   context.customer.attributes &&
-            //   context.customer.attributes.lastConversation &&
-            //   context.conversation.attributes.custom
-            //     .customerValidationSuccessfulBool !== undefined &&
-            //   context.conversation.attributes.custom
-            //     .customerValidationSuccessfulBool === true
-            // ) {
-            //   // Close if true
-            //   Kustomer.modal.hide(context.conversation.id);
-            //   // Kustomer.modal.destroyAll();
-            // }
-            // //  if (
-            // //   !currentCustomerId ||
-            // //   (currentCustomerId &&
-            // //     currentCustomerId !==
-            // //       context.customer.attributes.lastConversation.id &&
-            // //     context &&
-            // //     context.conversation &&
-            // //     context.conversation.attributes &&
-            // //     context.conversation.attributes.custom &&
-            // //     (!context.conversation.attributes.custom
-            // //       .customerValidationSuccessfulBool === undefined ||
-            // //       (context.conversation.attributes.custom
-            // //         .customerValidationSuccessfulBool !== undefined &&
-            // //         context.conversation.attributes.custom
-            // //           .customerValidationSuccessfulBool === true)))
-            // // )
-            // else {
-            //   const modalUrl = `${
-            //     document.getElementById("modalUrl").value
-            //   }?modalId=${context.conversation.id}&conversationId=${
-            //     context.customer.attributes.lastConversation.id
-            //   }&firstName=${encodeURIComponent(
-            //     context.customer.attributes.firstName
-            //   )}&lastName=${encodeURIComponent(
-            //     context.customer.attributes.lastName
-            //   )}`;
-            //   initAndShowModal(
-            //     context.customer.attributes.lastConversation.id,
-            //     modalUrl,
-            //     "Customer Authentication"
-            //   );
-            // }
-          }, 2000);
+            }
+          );
+          // if (
+          //   context &&
+          //   context.customer &&
+          //   context.customer.attributes &&
+          //   context.customer.attributes.lastConversation &&
+          //   context.conversation.attributes.custom
+          //     .customerValidationSuccessfulBool !== undefined &&
+          //   context.conversation.attributes.custom
+          //     .customerValidationSuccessfulBool === true
+          // ) {
+          //   // Close if true
+          //   Kustomer.modal.hide(context.conversation.id);
+          //   // Kustomer.modal.destroyAll();
+          // }
+          // //  if (
+          // //   !currentCustomerId ||
+          // //   (currentCustomerId &&
+          // //     currentCustomerId !==
+          // //       context.customer.attributes.lastConversation.id &&
+          // //     context &&
+          // //     context.conversation &&
+          // //     context.conversation.attributes &&
+          // //     context.conversation.attributes.custom &&
+          // //     (!context.conversation.attributes.custom
+          // //       .customerValidationSuccessfulBool === undefined ||
+          // //       (context.conversation.attributes.custom
+          // //         .customerValidationSuccessfulBool !== undefined &&
+          // //         context.conversation.attributes.custom
+          // //           .customerValidationSuccessfulBool === true)))
+          // // )
+          // else {
+          //   const modalUrl = `${
+          //     document.getElementById("modalUrl").value
+          //   }?modalId=${context.conversation.id}&conversationId=${
+          //     context.customer.attributes.lastConversation.id
+          //   }&firstName=${encodeURIComponent(
+          //     context.customer.attributes.firstName
+          //   )}&lastName=${encodeURIComponent(
+          //     context.customer.attributes.lastName
+          //   )}`;
+          //   initAndShowModal(
+          //     context.customer.attributes.lastConversation.id,
+          //     modalUrl,
+          //     "Customer Authentication"
+          //   );
+          // }
+        }, 2000);
 
         Kustomer.on("context", contextHandlerFunc);
       }
@@ -157,8 +155,8 @@
           id: modalId,
           title: title,
           url: modalUrl,
-          height: 1000,
-          width: 1000,
+          height: Math.ceil(window.screen.availHeight * 0.8),
+          width: Math.ceil(window.screen.availWidth * 0.8),
         };
         if (Kustomer) {
           // try {
@@ -217,18 +215,18 @@
       <br /><br />
       <div id="container" class="ui one textArea"></div>
       <label for="modalUrl">URL:</label>
-      <!-- <input
-        type="text"
-        name="modalUrl"
-        id="modalUrl"
-        value="https://guse4-carespcimidtiergw-qab.dqs.pcln.com/c3commonapp/customerAuthentication?reservationId=20466051265&callerPhone=+14465565565&contactId=fgfghf67jgffg"
-      /> -->
       <input
         type="text"
         name="modalUrl"
         id="modalUrl"
-        value="https://smukadam-pcln.github.io/kustomer-poc/modal.html"
+        value="https://guse4-carespcimidtiergw-qab.dqs.pcln.com/c3commonapp/customerAuthentication?reservationId=20466051265&callerPhone=+14465565565&contactId=fgfghf67jgffg"
       />
+      <!-- <input
+        type="text"
+        name="modalUrl"
+        id="modalUrl"
+        value="https://smukadam-pcln.github.io/kustomer-poc/modal.html"
+      /> -->
       <button onclick="initAndShowModal()">Open URL in modal</button>
       <div id="eventLog"></div>
     </div>
