@@ -182,7 +182,6 @@
               console.groupEnd();
               Kustomer.modal.show(options.id);
               modalMap[options.id] = true;
-              window.addEventListener("message", handleEvent, false);
 
               const handleEvent = (e) => {
                 const response = e.data;
@@ -194,6 +193,8 @@
                   window.removeEventListener("message", handleEvent);
                 }
               };
+
+              window.addEventListener("message", handleEvent, false);
             });
           } catch (ex) {
             console.error("error creating modal");
