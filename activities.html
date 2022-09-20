@@ -7,16 +7,71 @@
     <script>
       function loadContext() {
         // Kustomer.initialize is required for card visibility in panel.
-        Kustomer.initialize(function (contextJSON) {
-          console.group("Context");
-          console.log(contextJSON);
-          console.groupEnd();
-          document.getElementById("json").textContent = JSON.stringify(
-            contextJSON,
-            undefined,
-            2
-          );
-        });
+        Kustomer.initialize(function (contextJSON) {});
+      }
+
+      function initAndShowModal(modalId, modalUrl, title) {
+        //Init Modal
+        if (!modalUrl) {
+          alert("Invalid URL");
+          return;
+        }
+        const options = {
+          id: modalId,
+          title: title,
+          url: modalUrl,
+          height: Math.ceil(window.screen.availHeight * 0.8),
+          width: Math.ceil(window.screen.availWidth * 0.8),
+        };
+        if (Kustomer) {
+          // try {
+          //   Kustomer.modal.destroy(options.id);
+          // } catch (ex) {
+          //   console.log("Modal does not exist, creating new one");
+          //   initAndShowModal(modalId, modalUrl, "Customer Authentication");
+          // } finally {
+          //   Kustomer.modal.init(options, (data) => {
+          //     console.group();
+          //     console.log(options);
+          //     console.log(data);
+          //     console.groupEnd();
+          //     Kustomer.modal.show(options.id);
+          //     modalMap[options.id] = true;
+          //   });
+          // }
+          try {
+            Kustomer.modal.init(options, (data) => {
+              console.group("Init Modal");
+              console.log(options);
+              console.log(data);
+              console.groupEnd();
+              Kustomer.modal.show(options.id);
+              Kustomer.resize({ modal: options.id });
+              modalMap[options.id] = true;
+            });
+          } catch (ex) {
+            console.error("error creating modal");
+            console.error(ex);
+            Kustomer.modal.show(options.id);
+            // Kustomer.modal.destroy(options.id);
+            // setTimeout(() => {
+            //   Kustomer.modal.init(
+            //     options,
+            //     (data) => {
+            //       console.group();
+            //       console.log(options);
+            //       console.log(data);
+            //       console.groupEnd();
+            //       Kustomer.modal.show(options.id);
+            //       Kustomer.resize({ modal: options.id });
+            //       modalMap[options.id] = true;
+            //     },
+            //     1000
+            //   );
+            // });
+          } finally {
+          }
+        }
       }
     </script>
   </head>
@@ -25,11 +80,10 @@
       <br /><br />
       <div id="container" class="ui one textArea"></div>
       <select>
-        <option>Select Activity</option>
+        <option disabled>Select Activity</option>
         <option>View/Send Contract</option>
-        <option>RC Cancellation</option></select
-      >&nbsp;&nbsp;&nbsp; <button>Continue</button><br /><br />
-      <pre id="json"></pre>
+      </select>
+      &nbsp;&nbsp;&nbsp; <button onClick="initAndShowModal('viewContract', '')">Continue</button><br /><br />
     </div>
   </body>
 </html>
