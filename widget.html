@@ -186,7 +186,7 @@
               const handleEvent = (e) => {
                 const response = e.data;
 
-                if (response.type === "MODAL_HIDE") {
+                if (response.type === "MODAL_CLOSE") {
                   console.group("Modal hide event");
                   console.log(response);
                   console.groupEnd();
