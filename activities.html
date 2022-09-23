@@ -47,12 +47,10 @@
               console.groupEnd();
               Kustomer.modal.show(options.id);
               Kustomer.resize({ modal: options.id });
-              modalMap[options.id] = true;
             });
           } catch (ex) {
             console.error("error creating modal");
             console.error(ex);
-            Kustomer.modal.show(options.id);
             // Kustomer.modal.destroy(options.id);
             // setTimeout(() => {
             //   Kustomer.modal.init(
@@ -83,7 +81,7 @@
         <option disabled>Select Activity</option>
         <option>View/Send Contract</option>
       </select>
-      &nbsp;&nbsp;&nbsp; <button onClick="initAndShowModal('viewContract', 'https://guse4-carespcimidtiergw-qab.dqs.pcln.com/c3activitiesapp/contract?offerNumber=20388302265', 'Contract')">Continue</button><br /><br />
+      &nbsp;&nbsp;&nbsp; <button onClick="initAndShowModal('viewContract', 'https://guse4-carespcimidtiergw-qaa.dqs.pcln.com/c3activitiesapp/contract?offerNumber=20388302265', 'Contract')">Continue</button><br /><br />
     </div>
   </body>
 </html>
