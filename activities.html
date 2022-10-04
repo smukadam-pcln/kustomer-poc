@@ -10,12 +10,33 @@
         Kustomer.initialize(function (contextJSON) {});
       }
 
+      function createModalParams(event) {
+        let url = "";
+        let title = "";
+        let modalId = document.getElementById("ddlActivity").value
+
+        switch (modalId) {
+          case 'VIEW_CONTRACT':
+            url = `https://guse4-carespcimidtiergw-qaa.dqs.pcln.com/c3activitiesapp/contract?offerNumber=20382623264`;
+            title = "View/Send Contract";
+            break;
+
+          case 'CANCEL_POLICY':
+            url = `https://guse4-carespcimidtiergw-qab.dqs.pcln.com/c3activitiesapp/cancelPolicy`;
+            title = "Cancel Policy";
+            break;
+        }
+
+        initAndShowModal(modalId, url, title);
+      }
+
       function initAndShowModal(modalId, modalUrl, title) {
         //Init Modal
         if (!modalUrl) {
           alert("Invalid URL");
           return;
         }
+
         const options = {
           id: modalId,
           title: title,
@@ -56,9 +77,9 @@
             console.error(ex);
             Kustomer.modal.show(options.id);
             Kustomer.resize({
-                height: Math.ceil(window.screen.availHeight * 0.8),
-                width: Math.ceil(window.screen.availWidth * 0.8),
-              });
+              height: 1000,
+              width: 1000,
+            });
             // Kustomer.modal.destroy(options.id);
             // setTimeout(() => {
             //   Kustomer.modal.init(
@@ -85,13 +106,14 @@
     <div class="ui card mainCard">
       <br /><br />
       <div id="container" class="ui one textArea"></div>
-      <select>
-        <option disabled>Select Activity</option>
-        <option>View/Send Contract</option>
+      <select id="ddlActivity">
+        <option value="" disabled>Select Activity</option>
+        <option value="VIEW_CONTRACT">View/Send Contract</option>
+        <option value="CANCEL_POLICY">Cancel Policy</option>
       </select>
       &nbsp;&nbsp;&nbsp;
       <button
-        onClick="initAndShowModal('viewContract', 'https://guse4-carespcimidtiergw-qaa.dqs.pcln.com/c3activitiesapp/contract?offerNumber=20382623264', 'Contract')"
+        onClick="createModalParams()"
       >
         Continue</button
       ><br /><br />
