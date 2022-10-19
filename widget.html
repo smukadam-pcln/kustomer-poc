@@ -40,7 +40,7 @@
           cb(
             customerId,
             conversationId,
-            response.attributes.custom.customerValidationSuccessfulBool
+            response?.attributes?.custom?.customerValidationSuccessfulBool? true: false
           );
         });
       }
