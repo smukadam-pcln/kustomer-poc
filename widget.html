@@ -191,12 +191,8 @@
       Kustomer._initializedModals[options.id] &&
       Kustomer._initializedModals[options.id].initialized
     ) {
-      // If already initialized just show it
-      if(Kustomer?._initializedModals[options.id]?.visible){
-        // If visible, listen for close event
-        window.addEventListener("message", handleEvent, false);
-      }else{
         Kustomer.modal.show(options.id)
+        window.addEventListener("message", handleEvent, false);
       }
       
     } else {
