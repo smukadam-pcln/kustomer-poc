@@ -192,8 +192,13 @@
       Kustomer._initializedModals[options.id].initialized
     ) {
       // If already initialized just show it
-      Kustomer.modal.show(options.id)
-      window.addEventListener("message", handleEvent, false);
+      if(Kustomer?._initializedModals[options.id]?.visible){
+        // If visible, listen for close event
+        window.addEventListener("message", handleEvent, false);
+      }else{
+        Kustomer.modal.show(options.id)
+      }
+      
     } else {
       // initialize and show
       // init method throws and error if modal is already initialized
