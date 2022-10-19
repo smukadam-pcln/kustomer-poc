@@ -198,7 +198,7 @@
       // initialize and show
       // init method throws and error if modal is already initialized
       try {
-        Kustomer.modal.init(options, (data: any) => {
+        Kustomer.modal.init(options, (data) => {
           Kustomer.modal.show(options.id)
           window.addEventListener("message", handleEvent, false);
         })
