@@ -174,16 +174,7 @@
           //     modalMap[options.id] = true;
           //   });
           // }
-          try {
-            Kustomer.modal.init(options, (data) => {
-              console.group("Init Modal");
-              console.log(options);
-              console.log(data);
-              console.groupEnd();
-              Kustomer.modal.show(options.id);
-              modalMap[options.id] = true;
-
-              const handleEvent = (e) => {
+     const handleEvent = (e) => {
                 const response = e.data;
 
                 if (response.type === "MODAL_CLOSE") {
@@ -193,13 +184,62 @@
                   window.removeEventListener("message", handleEvent);
                 }
               };
+          
+   if (Kustomer) {
+    if (
+      Kustomer._initializedModals &&
+      Kustomer._initializedModals[options.id] &&
+      Kustomer._initializedModals[options.id].initialized
+    ) {
+      // If already initialized just show it
+      Kustomer.modal.show(options.id)
+      window.addEventListener("message", handleEvent, false);
+    } else {
+      // initialize and show
+      // init method throws and error if modal is already initialized
+      try {
+        Kustomer.modal.init(options, (data: any) => {
+          Kustomer.modal.show(options.id)
+          window.addEventListener("message", handleEvent, false);
+        })
+      } catch (ex) {
+        console.error('error initializing modal')
+        console.error(ex)
+        return false
+      }
+    }
+  } else {
+    console.error('Kustomer obj is not initialized')
+    return false
+  }
+          
+          
+          try {
+//             Kustomer.modal.init(options, (data) => {
+//               console.group("Init Modal");
+//               console.log(options);
+//               console.log(data);
+//               console.groupEnd();
+//               Kustomer.modal.show(options.id);
+//               modalMap[options.id] = true;
 
-              window.addEventListener("message", handleEvent, false);
-            });
+//               const handleEvent = (e) => {
+//                 const response = e.data;
+
+//                 if (response.type === "MODAL_CLOSE") {
+//                   console.group("Modal hide event");
+//                   console.log(response);
+//                   console.groupEnd();
+//                   window.removeEventListener("message", handleEvent);
+//                 }
+//               };
+
+//               window.addEventListener("message", handleEvent, false);
+//             });
           } catch (ex) {
             console.error("error creating modal");
             console.error(ex);
-            Kustomer.modal.show(options.id);
+//             Kustomer.modal.show(options.id);
             // Kustomer.modal.destroy(options.id);
             // setTimeout(() => {
             //   Kustomer.modal.init(
